@@ -20,11 +20,53 @@ module.exports = (sequelize, DataTypes) => {
     },
     title: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isMin(value) {
+          if (value.length < 3) {
+            throw new Error("The minimum characters this field can have is 3");
+          }
+        },
+        isMax(value) {
+          if (value.length > 500) {
+            throw new Error("The maximum characters this field can have is 500");
+          }
+        }
+      }
     },
-    description: DataTypes.TEXT,
-    ingredients: DataTypes.TEXT,
-    instructions: DataTypes.TEXT,
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        isMax(value) {
+          if (value.length > 500) {
+            throw new Error("The maximum characters this field can have is 500");
+          }
+        }
+      }
+    },
+    ingredients: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        isMax(value) {
+          if (value.length > 1000) {
+            throw new Error("The maximum characters this field can have is 1000");
+          }
+        }
+      }
+    },
+    instructions: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        isMax(value) {
+          if (value.length > 5000) {
+            throw new Error("The maximum characters this field can have is 5000");
+          }
+        }
+      }
+    },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE
   }, {
